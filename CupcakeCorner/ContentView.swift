@@ -9,20 +9,29 @@ import SwiftUI
 
 
 struct ContentView: View {
+    @State private var username = ""
+    @State private var email = ""
+    
+    
     var body: some View {
-        AsyncImage(url: URL(string: "https://hws.dev/img/logo.png")) { phase in
-            if let image = phase.image {
-                image
-                    .resizable()
-                    .scaledToFit()
-            } else if phase.error != nil {
-                Text("There was an error loading the image.")
-            } else {
-                ProgressView()
+        Form {
+            Section {
+                TextField("Username", text: $username)
+                TextField("E-mail", text: $email)
             }
-        }
-        .frame(width: 200, height: 200)
             
+            Section {
+                Button("Create account") {
+                    print("Creating account...")
+                }
+            }
+            .disabled(disableForm)
+        }
+            
+    }
+    
+    var disableForm: Bool {
+        username.count < 5 || email.count < 5
     }
 }
 
